@@ -149,22 +149,24 @@ public class BasicAnimActivity2 extends AppCompatActivity {
      * </set>
      */
     public void set(View view) {
+        //创建一个动画集合
         AnimationSet set = new AnimationSet(true);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
-
+        //创建平移动画
         TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_PARENT, -0.8f, Animation.RELATIVE_TO_SELF, 0);
         translate.setDuration(3000);
-
+        //创建透明度动画
         AlphaAnimation alpha = new AlphaAnimation(0.5f, 1.0f);
         alpha.setDuration(3000);
-
+        //创建旋转动画，延时2000后播放，
         RotateAnimation rotate = new RotateAnimation(0, 3600, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(2000);
         rotate.setStartOffset(3000);
-
+        //把所有的动画加入到set集合中
         set.addAnimation(translate);
         set.addAnimation(alpha);
         set.addAnimation(rotate);
+        //播放集合动画
         tv_anim.startAnimation(set);
     }
 }
