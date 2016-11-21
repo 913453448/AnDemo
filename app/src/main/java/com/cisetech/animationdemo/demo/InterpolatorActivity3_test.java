@@ -1,17 +1,16 @@
 package com.cisetech.animationdemo.demo;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
@@ -23,58 +22,82 @@ import com.cisetech.animationdemo.R;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import lecho.lib.hellocharts.gesture.ContainerScrollType;
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.view.LineChartView;
+
+import static com.cisetech.animationdemo.R.id.chart;
+
 /**
  * author：yinqingy
- * date：2016-11-21 16:39
+ * date：2016-11-21 21:28
  * blog：http://blog.csdn.net/vv_bug
- * desc：透明度动画+插值器测试
+ * desc：数据展示页面
  */
 
-public class InterpolatorActivity3_alpha extends AppCompatActivity {
+public class InterpolatorActivity3_test extends AppCompatActivity {
     private GridView mGridView;
-    private View tv_anim;
-    private TextView tv_desc;
+    private LineChartView mLineChartView;
     private List<Map<String, Object>> datas = new ArrayList<>();
-    private AlphaAnimation alphaAnimation=new AlphaAnimation(0,1.5f);
+    private TextView tv_desc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        alphaAnimation.setDuration(2000);
-        setContentView(R.layout.activity_interpolator_activity3_alpha);
+        setContentView(R.layout.activity_interpolator_activity3_test);
+        mLineChartView = (LineChartView) findViewById(chart);
+        tv_desc = (TextView) findViewById(R.id.tv_desc);
         mGridView = (GridView) findViewById(R.id.gv_type);
-        tv_anim=findViewById(R.id.tv_anim);
-        tv_desc= (TextView) findViewById(R.id.tv_desc);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    tv_desc.setText(datas.get(position).get("DESC").toString());
-                    Object obj = null;
-                    Class clazz = (Class) datas.get(position).get("CLASS");
-                    if("CycleInterpolator".equals(clazz.getSimpleName())){
-                        Constructor[] declaredConstructors = clazz.getDeclaredConstructors();
-                        for (Constructor con:declaredConstructors) {
-                            if(con.getParameterTypes().length==1){
-                                obj=con.newInstance(3);
-                                break;
+                setTitle(datas.get(position).get("TITLE").toString());
+                tv_desc.setText(datas.get(position).get("DESC").toString());
+                float value = 0.0f;
+                List<PointValue> points = new ArrayList<PointValue>();
+                for (int i = 0; i <= 10; i++) {
+                    value += 0.1f;
+                    try {
+                        Object obj = null;
+                        Class clazz = (Class) datas.get(position).get("CLASS");
+                        if("CycleInterpolator".equals(clazz.getSimpleName())){
+                            Constructor[] declaredConstructors = clazz.getDeclaredConstructors();
+                            for (Constructor con:declaredConstructors) {
+                                if(con.getParameterTypes().length==1){
+                                    obj=con.newInstance(3);
+                                    break;
+                                }
+                            }
+                        }else{
+                            obj=clazz.newInstance();
+                        }
+                        for (Method m : obj.getClass().getDeclaredMethods()) {
+                            String name=m.getName();
+                            if("getInterpolation".equals(name)){
+                                m.setAccessible(true);
+                                Object result = m.invoke(obj, value);
+                                points.add(new PointValue(value, (Float) result));
                             }
                         }
-                    }else{
-                        obj=clazz.newInstance();
+                    }  catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
                     }
-                    alphaAnimation.setInterpolator((Interpolator) obj);
-                    tv_anim.startAnimation(alphaAnimation);
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
                 }
+                initDatas1(points);
             }
         });
         initDatas();
@@ -140,5 +163,31 @@ public class InterpolatorActivity3_alpha extends AppCompatActivity {
                 new String[]{"TITLE"},
                 new int[]{android.R.id.text1})
         );
+    }
+
+    private void initDatas1(List<PointValue> points) {
+        Line line = new Line(points).setColor(Color.RED).setCubic(false);
+        List<Line> lines = new ArrayList<Line>();
+        lines.add(line);
+        LineChartData data = new LineChartData();
+        data.setLines(lines);
+
+        //坐标轴
+        Axis axisX = new Axis(); //X轴
+        axisX.setHasTiltedLabels(true);
+        axisX.setName("输入值");
+        data.setAxisXBottom(axisX);
+
+        Axis axisY = new Axis();  //Y轴
+        axisY.setHasTiltedLabels(true);
+        axisY.setName("输出值");
+        data.setAxisYLeft(axisY);
+
+        //设置行为属性，支持缩放、滑动以及平移
+        mLineChartView.setInteractive(true);
+        mLineChartView.setZoomType(ZoomType.HORIZONTAL_AND_VERTICAL);
+        mLineChartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+        mLineChartView.setLineChartData(data);
+        mLineChartView.setVisibility(View.VISIBLE);
     }
 }

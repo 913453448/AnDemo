@@ -31,6 +31,7 @@ public class InterpolatorActivity3 extends ListActivity {
                 new String[]{TITLE},new int[]{android.R.id.text1}));
     }
     private void initDatas() {
+        addData("插值器解析", InterpolatorActivity3_test.class);
         addData("透明度(Alpha)+插值器测试", InterpolatorActivity3_alpha.class);
         addData("旋转(Rotate)+插值器测试", InterpolatorActivity3_rotate.class);
         addData("平移(Translate)+插值器测试", InterpolatorActivity3_translate.class);

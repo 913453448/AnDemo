@@ -21,7 +21,8 @@
         <activity android:name=".demo.InterpolatorActivity3_alpha" />
         <activity android:name=".demo.InterpolatorActivity3_rotate" />
         <activity android:name=".demo.InterpolatorActivity3_translate" />
-        <activity android:name=".demo.InterpolatorActivity3_scale"></activity>
+        <activity android:name=".demo.InterpolatorActivity3_scale" />
+        <activity android:name=".demo.InterpolatorActivity3_test"></activity>
     </application>
 
 </manifest>
