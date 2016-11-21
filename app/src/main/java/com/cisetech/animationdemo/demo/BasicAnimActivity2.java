@@ -22,7 +22,7 @@ import com.cisetech.animationdemo.R;
  * desc：基础动画代码实现
  */
 
-public class BasicAnimActivity1 extends AppCompatActivity {
+public class BasicAnimActivity2 extends AppCompatActivity {
     private TextView tv_anim;
 
     @Override

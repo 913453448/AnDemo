@@ -16,7 +16,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".demo.BasicAnimXmlActivity1" />
-        <activity android:name=".demo.BasicAnimActivity1"></activity>
+        <activity android:name=".demo.BasicAnimActivity2" />
+        <activity android:name=".demo.InterpolatorActivity3" />
+        <activity android:name=".demo.InterpolatorActivity3_alpha" />
+        <activity android:name=".demo.InterpolatorActivity3_rotate" />
+        <activity android:name=".demo.InterpolatorActivity3_translate" />
+        <activity android:name=".demo.InterpolatorActivity3_scale"></activity>
     </application>
 
 </manifest>
