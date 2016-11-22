@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.cisetech.animationdemo.R;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,11 +56,26 @@ public class InterpolatorActivity3_translate extends AppCompatActivity {
                 try {
                     tv_anim.setText(datas.get(position).get("TITLE").toString());
                     tv_desc.setText(datas.get(position).get("DESC").toString());
-                    translateAnimation.setInterpolator((Interpolator) ((Class) datas.get(position).get("CLASS")).newInstance());
+                    Object obj = null;
+                    Class clazz = (Class) datas.get(position).get("CLASS");
+                    if("CycleInterpolator".equals(clazz.getSimpleName())){
+                        Constructor[] declaredConstructors = clazz.getDeclaredConstructors();
+                        for (Constructor con:declaredConstructors) {
+                            if(con.getParameterTypes().length==1){
+                                obj=con.newInstance(3);
+                                break;
+                            }
+                        }
+                    }else{
+                        obj=clazz.newInstance();
+                    }
+                    translateAnimation.setInterpolator((Interpolator) obj);
                     tv_anim.startAnimation(translateAnimation);
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }

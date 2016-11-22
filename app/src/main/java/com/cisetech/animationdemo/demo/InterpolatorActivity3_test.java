@@ -106,7 +106,7 @@ public class InterpolatorActivity3_test extends AppCompatActivity {
     private void initDatas() {
         Map<String, Object> map1 = new HashMap<>();
         map1.put("TITLE", "AccelerateDecelerateInterpolator");
-        map1.put("DESC", "在动画开始与介绍的地方速率改变比较慢，在中间的时候加速");
+        map1.put("DESC", "在动画开始与结束的地方速率改变比较慢，在中间的时候加速");
         map1.put("CLASS", AccelerateDecelerateInterpolator.class);
 
         Map<String, Object> map2 = new HashMap<>();
@@ -171,7 +171,6 @@ public class InterpolatorActivity3_test extends AppCompatActivity {
         lines.add(line);
         LineChartData data = new LineChartData();
         data.setLines(lines);
-
         //坐标轴
         Axis axisX = new Axis(); //X轴
         axisX.setHasTiltedLabels(true);
