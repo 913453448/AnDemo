@@ -1,8 +1,10 @@
 package com.cisetech.animationdemo.demo.practise;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -47,6 +49,14 @@ public class BasicPractiseActivity1 extends ListActivity {
         addData("alpha(从0.1到1透明度增加)", R.anim.pra_anim_alpha1);
         addData("alpha+rotate", R.anim.pra_anim_alpha_rotate);
         addData("alpha+scale", R.anim.pra_anim_alpha_scale);
+        addData("alpha+scale 2", R.anim.pra_anim_alpha_scale2);
+        addData("自定义动画1", R.anim.pra_anim_own_design);
+        addData("slide left in", R.anim.pra_anim_slide_left);
+        addData("slide right in", R.anim.pra_anim_slide_right);
+        addData("slide right up", R.anim.pra_anim_slide_up);
+        addData("slide right bottom", R.anim.pra_anim_slide_bottom);
+        addData("Zoom enter", R.anim.pra_zoom_enter);
+        addData("Zoom exit", R.anim.pra_zoom_exit);
     }
     private void addData(String title,int resId){
         Map<String,Object>demo=new TreeMap<>();
@@ -59,6 +69,12 @@ public class BasicPractiseActivity1 extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         ListView listView=getListView();
         Animation a= AnimationUtils.loadAnimation(this, (Integer) datas.get(position).get(RESID));
+        if((Integer) datas.get(position).get(RESID)==R.anim.pra_anim_shake){
+            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.cancel();
+            long [] pattern = {100,200};   // 停止 开启
+            vibrator.vibrate(pattern,-1);
+        }
         listView.startAnimation(a);
     }
 }
