@@ -3,10 +3,13 @@
     android:duration="3000"
     >
     <alpha
-        android:fromAlpha="0.5"
+        android:fromAlpha="0.2"
         android:toAlpha="1"
+        android:repeatCount="1"
+        android:repeatMode="reverse"
         />
     <rotate
+        android:startOffset="6000"
         android:fromDegrees="0"
         android:toDegrees="360"
         android:pivotX="50%"

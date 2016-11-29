@@ -7,11 +7,11 @@
         android:protectionLevel="normal" />
 
     <uses-permission android:name="com.cn.customview.permissions.MY_BROADCAST" />
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <permission
         android:name="com.cn.customview.permissions.MY_BROADCAST"
-        android:protectionLevel="normal"></permission>
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -45,7 +45,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".demo.practise.BasicPractiseActivity1"></activity>
+        <activity android:name=".demo.practise.BasicPractiseActivity1" />
+        <activity android:name=".demo.practise.TestActivity" />
+        <activity android:name=".demo.PropertyAnimActivity4" />
+        <activity android:name=".demo.PropertyAnimActivity4_compare" />
+        <activity android:name=".demo.practise.PropertyAnimActivity4_evaluator"></activity>
     </application>
 
 </manifest>

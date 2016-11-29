@@ -57,6 +57,7 @@ public class BasicPractiseActivity1 extends ListActivity {
         addData("slide right bottom", R.anim.pra_anim_slide_bottom);
         addData("Zoom enter", R.anim.pra_zoom_enter);
         addData("Zoom exit", R.anim.pra_zoom_exit);
+        addData("shake test", R.anim.pra_anim_shake);
     }
     private void addData(String title,int resId){
         Map<String,Object>demo=new TreeMap<>();

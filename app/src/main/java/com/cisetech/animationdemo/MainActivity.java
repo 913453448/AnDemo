@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 import com.cisetech.animationdemo.demo.BasicAnimActivity2;
 import com.cisetech.animationdemo.demo.BasicAnimXmlActivity1;
 import com.cisetech.animationdemo.demo.InterpolatorActivity3;
+import com.cisetech.animationdemo.demo.PropertyAnimActivity4;
 import com.cisetech.animationdemo.demo.practise.BasicPractiseActivity1;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class MainActivity extends ListActivity {
         addData("基础动画代码实现（二）", BasicAnimActivity2.class);
         addData("动画插值器Interpolator（三）", InterpolatorActivity3.class);
         addData("基础动画练习（四）", BasicPractiseActivity1.class);
+        addData("属性动画（五）", PropertyAnimActivity4.class);
     }
     private void addData(String title,Class clazz){
         Map<String,Object>demo=new TreeMap<>();
